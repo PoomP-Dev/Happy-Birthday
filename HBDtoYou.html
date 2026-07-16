@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Fernqq🎁</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* สไตล์หลักของเว็บ */
+        * {
+            box-sizing: border-box;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* พื้นหลังเคลื่อนไหวชวนฝัน */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            font-family: 'Mali', cursive;
+            text-align: center;
+            overflow: hidden;
+            transition: background 0.8s ease;
+        }
+
+        /* คลาสสเปเชียลตอนเข้าหน้าดูดาว */
+        body.star-mode {
+            background: #0b0f21 !important;
+            animation: none !important;
+        }
+
+        /* คลาสสลับหน้าจอ */
+        .screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+            overflow-y: auto;
+        }
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(40px) scale(0.92);
+        }
+
+        /* --- 0. หน้าจอเขียนอักษร (Intro Screen) --- */
+        .intro-box {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 50px 30px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(255, 107, 129, 0.15);
+            max-width: 480px;
+            width: 90%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .intro-box:hover {
+            transform: scale(1.02);
+        }
+        .intro-emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: floatStraight 2s ease-in-out infinite;
+        }
+        .typewriter-text {
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff6b81, #ff4757, #ffa502);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            display: inline-block;
+            border-right: 3px solid #ff6b81;
+            padding-right: 5px;
+            white-space: normal;
+            word-break: break-word;
+            animation: blink 0.75s step-end infinite;
+        }
+        .skip-text {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 25px;
+            letter-spacing: 0.5px;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #ff6b81; }
+        }
+
+        /* --- 1. หน้าจอเมนูหลัก (Menu Screen) --- */
+        .menu-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 50px 35px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(255, 107, 129, 0.15);
+            max-width: 650px;
+            width: 90%;
+        }
+        .menu-title {
+            background: linear-gradient(45deg, #ff6b81, #ff4757, #ffa502);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.6rem;
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+            filter: drop-shadow(0px 4px 10px rgba(255, 107, 129, 0.25));
+        }
+        .main-cake-img {
+            font-size: 5.5rem;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: float 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 15px 20px rgba(255,107,129,0.35));
+        }
+        .menu-options {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .menu-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid transparent;
+            border-radius: 30px;
+            padding: 30px 20px;
+            width: 240px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+        
+        /* Effect ลำแสงวิ่งผ่านเวลา Hover เมนูการ์ด */
+        .menu-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            transition: none;
+            opacity: 0;
+        }
+        .menu-card:hover::after {
+            left: 150%;
+            transition: all 0.8s ease-in-out;
+            opacity: 1;
+        }
+
+        /* ตกแต่งปุ่ม Star Timelapse */
+        .star-opt { box-shadow: 0 12px 30px rgba(116, 125, 246, 0.15); }
+        .star-opt:hover {
+            transform: translateY(-15px) scale(1.04);
+            border-color: #747df6;
+            box-shadow: 0 25px 45px rgba(116, 125, 246, 0.4);
+        }
+        /* ตกแต่งปุ่ม Happy Birthday */
+        .hbd-opt { box-shadow: 0 12px 30px rgba(255, 107, 129, 0.15); }
+        .hbd-opt:hover {
+            transform: translateY(-15px) scale(1.04);
+            border-color: #ff6b81;
+            box-shadow: 0 25px 45px rgba(255, 107, 129, 0.4);
+        }
+        
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+        .menu-card:hover .card-icon {
+            transform: scale(1.2) rotate(8deg);
+        }
+        .menu-card h3 {
+            margin: 5px 0 10px 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .star-opt h3 { color: #5352ed; }
+        .hbd-opt h3 { color: #ff6b81; }
+        .menu-card p {
+            font-size: 0.95rem;
+            color: #666;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* --- 2. หน้าจอ Star Timelapse --- */
+        #star-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .star-overlay {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+            width: 90%;
+            margin: 25px 0;
+        }
+        .star-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 35px 25px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+        .star-card h2 {
+            background: linear-gradient(45deg, #a29bfe, #747df6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 0;
+            font-size: 2.3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .star-card p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #dfe6e9;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* จัดสไตล์กรอบวิดีโอ + เรืองแสงนีออนพาสเทล */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #111;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .star-card .video-container {
+            box-shadow: 0 0 25px rgba(116, 125, 246, 0.4), 0 12px 30px rgba(0,0,0,0.5);
+        }
+        .card .video-container {
+            box-shadow: 0 0 25px rgba(255, 107, 129, 0.3), 0 12px 30px rgba(0,0,0,0.15);
+        }
+        .video-container iframe, .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            object-fit: contain;
+        }
+
+        /* --- 3. หน้าจอ Happy Birthday --- */
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 45px 30px;
+            border-radius: 40px;
+            box-shadow: 0 25px 55px rgba(255, 107, 129, 0.18);
+            max-width: 460px;
+            width: 90%;
+            /* ลอยขึ้นลงตรงๆ ไม่หมุนตามคำขอ */
+            animation: floatStraight 3.5s ease-in-out infinite;
+        }
+        .card h1 {
+            background: linear-gradient(45deg, #ff6b81, #ff4757);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3em;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .card h2 {
+            color: #ffa502;
+            font-size: 1.6em;
+            margin-top: 0;
+            letter-spacing: 1px;
+        }
+        .card p {
+            color: #333;
+            font-size: 1.15em;
+            line-height: 1.7;
+            margin: 20px 0;
+        }
+        .emoji {
+            font-size: 4em;
+            margin: 10px 0;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.08));
+        }
+
+        /* --- ปุ่มกด (Buttons) --- */
+        .btn {
+            background: linear-gradient(45deg, #ff6b81, #ff4757);
+            color: white;
+            border: none;
+            padding: 14px 38px;
+            font-size: 1.15em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Mali', cursive;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin-top: 10px;
+            box-shadow: 0 8px 25px rgba(255, 107, 129, 0.4);
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 129, 0.55);
+            filter: brightness(1.05);
+        }
+        
+        /* ปุ่มเต้นตุบตับเรียกให้กดคลิก */
+        @keyframes pulseEffect {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 107, 129, 0); transform: scale(1.04); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); transform: scale(1); }
+        }
+        .btn-pulse {
+            animation: pulseEffect 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        .btn-pulse:hover {
+            animation: none;
+        }
+
+        .btn-back {
+            background: linear-gradient(45deg, #88898c, #636b77);
+            box-shadow: 0 8px 20px rgba(116, 125, 140, 0.3);
+        }
+        .btn-back:hover { box-shadow: 0 12px 25px rgba(116, 125, 140, 0.5); }
+        
+        .btn-star {
+            background: linear-gradient(45deg, #5352ed, #3742fa);
+            box-shadow: 0 8px 20px rgba(83, 82, 237, 0.35);
+        }
+        .btn-star:hover { box-shadow: 0 12px 25px rgba(83, 82, 237, 0.55); }
+
+        /* --- องค์ประกอบพื้นหลังลอยๆ --- */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0; /* ซ่อนไว้ก่อนในตอนแรก */
+            transition: opacity 1s ease;
+        }
+        .bg-heart, .bg-cake {
+            position: absolute;
+            font-size: 2.6rem;
+            opacity: 0.3;
+            filter: blur(0.3px);
+        }
+        @keyframes bgFloat {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(25px, -45px) rotate(15deg) scale(1.1); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        /* แอนิเมชันลอยแบบตรงๆ ไม่มีการหมุน */
+        @keyframes floatStraight {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* พิกัดของลอยหลังเว็บ */
+        .bg-heart:nth-child(1) { top: 15vh; left: 10vw; animation: bgFloat 14s ease-in-out infinite; }
+        .bg-heart:nth-child(2) { top: 75vh; left: 80vw; animation: bgFloat 17s ease-in-out infinite; animation-delay: 2s; }
+        .bg-heart:nth-child(3) { top: 40vh; left: 15vw; animation: bgFloat 19s ease-in-out infinite; animation-delay: 1.5s; }
+        .bg-heart:nth-child(4) { top: 10vh; left: 85vw; animation: bgFloat 16s ease-in-out infinite; animation-delay: 3s; }
+        .bg-heart:nth-child(5) { top: 55vh; left: 70vw; animation: bgFloat 18s ease-in-out infinite; }
+        .bg-cake:nth-child(6) { top: 25vh; left: 80vw; animation: bgFloat 15s ease-in-out infinite; animation-delay: 1.2s; }
+        .bg-cake:nth-child(7) { top: 10vh; left: 15vw; animation: bgFloat 18s ease-in-out infinite; animation-delay: 2.5s; }
+        .bg-cake:nth-child(8) { top: 70vh; left: 10vw; animation: bgFloat 16s ease-in-out infinite; }
+        .bg-cake:nth-child(9) { top: 85vh; left: 85vw; animation: bgFloat 20s ease-in-out infinite; animation-delay: 1.5s; }
+        .bg-cake:nth-child(10) { top: 5vh; left: 60vw; animation: bgFloat 17s ease-in-out infinite; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 107, 129, 0.3); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="bg-elements" class="bg-elements">
+        <span class="bg-heart">❤️</span>
+        <span class="bg-heart">❤️</span>
+        <span class="bg-heart">❤️</span>
+        <span class="bg-heart">❤️</span>
+        <span class="bg-heart">❤️</span>
+        <span class="bg-cake">🎂</span>
+        <span class="bg-cake">🎂</span>
+        <span class="bg-cake">🎂</span>
+        <span class="bg-cake">🎂</span>
+        <span class="bg-cake">🎂</span>
+    </div>
+
+    <!-- 0. หน้าจอเขียนอักษร (Intro Screen) -->
+    <div id="intro-screen" class="screen">
+        <div class="intro-box" onclick="skipIntro()">
+            <div class="intro-emoji">🎁✨</div>
+            <div>
+                <h1 id="typewriter" class="typewriter-text"></h1>
+            </div>
+            <div class="skip-text">Tap anywhere to skip •</div>
+        </div>
+    </div>
+
+    <!-- 1. หน้าจอเมนูหลัก -->
+    <div id="menu-screen" class="screen hidden">
+        <div class="menu-container">
+            <h1 class="menu-title">To Youuuuuu</h1>
+            <h1 class="menu-title">Fernqq</h1>
+            <div class="main-cake-img">💗</div>
+            
+            <div class="menu-options">
+                <div class="menu-card star-opt" onclick="showScreen('star')">
+                    <div class="card-icon">🌌</div>
+                    <h3>Star Timelapse</h3>
+                    <p>คลิปพับดาวสุดพิเศษ ✨</p>
+                </div>
+
+                <div class="menu-card hbd-opt" onclick="showScreen('hbd')">
+                    <div class="card-icon">🎂</div>
+                    <h3>Happy Birthday</h3>
+                    <p>Birthday Card 💖</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. หน้าจอ Star Timelapse -->
+    <div id="star-screen" class="screen hidden">
+        <canvas id="star-canvas"></canvas>
+        <div class="star-overlay">
+            <div class="star-card">
+                <h2>🌌 Star Timelapse</h2>
+                
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/Qw4tAOQevL4" 
+                        title="Star Timelapse Video" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <p>อันนี้เป็น Timelapse ที่เค้าถ่ายไว้ตอนพับดาวให้เธอ หวังว่าเธอจะชอบน้าาาาา 💫</p>
+                <button class="btn btn-star btn-back" onclick="showScreen('menu')">Back to menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. หน้าจอ Happy Birthday -->
+    <div id="hbd-screen" class="screen hidden">
+        <div class="card">
+            <div class="emoji">🎉🎂🧸</div>
+            <h1>Happy Birthday!</h1>
+            <h2>To You</h2>
+            
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/hJhwEcihBWc" 
+                    title="Happy Birthday Video" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <p>ขอให้เธอมีความสุขมากๆ สุขภาพแข็งแรง น่ารักแบบนี้ตลอดไปเลยนะ มีแต่สิ่งดีๆในชีวิต รักและเป็นห่วงเธอเสมอ 💖</p>
+            <button class="btn btn-pulse" onclick="celebrate()">Click Here!! ✨</button>
+            <br>
+            <button class="btn btn-back" onclick="showScreen('menu')" style="margin-top: 18px; font-size: 0.9em; padding: 10px 24px;">Back to menu</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // ระบบเขียนอักษร (Typewriter)
+        const introText = "Happy Birthday Fernqq! 🎂";
+        let textIndex = 0;
+        let isIntroSkipped = false;
+
+        function startTypewriter() {
+            const container = document.getElementById("typewriter");
+            if (textIndex < introText.length && !isIntroSkipped) {
+                container.innerHTML += introText.charAt(textIndex);
+                textIndex++;
+                setTimeout(startTypewriter, 120); // ความเร็วในการพิมพ์ (มิลลิวินาที)
+            } else if (!isIntroSkipped) {
+                // พิมพ์เสร็จแล้ว ค้างไว้ 1.5 วินาที แล้วข้ามไปหน้าเมนู
+                container.style.borderRight = "none"; // หยุดกระพริบ Cursor
+                setTimeout(skipIntro, 1500);
+            }
+        }
+
+        function skipIntro() {
+            if (isIntroSkipped) return;
+            isIntroSkipped = true;
+            
+            const introScreen = document.getElementById('intro-screen');
+            introScreen.classList.add('hidden');
+            
+            setTimeout(() => {
+                introScreen.style.display = 'none'; // นำออกจาก Layout เพื่อความลื่นไหล
+                showScreen('menu');
+            }, 800); // แมตช์กับความเร็ว Transition ของ CSS
+        }
+
+        // โหลดเสร็จแล้วค่อยเริ่มพิมพ์
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(startTypewriter, 800); // ดีเลย์สั้นๆ ก่อนเริ่มพิมพ์เพื่อความสมูท
+        });
+
+        // ฟังก์ชันสลับหน้าจอหลัก
+        function showScreen(screenId) {
+            document.getElementById('menu-screen').classList.add('hidden');
+            document.getElementById('star-screen').classList.add('hidden');
+            document.getElementById('hbd-screen').classList.add('hidden');
+
+            stopStarAnimation();
+
+            if (screenId === 'menu') {
+                document.getElementById('menu-screen').classList.remove('hidden');
+                document.body.classList.remove('star-mode');
+                document.getElementById('bg-elements').style.opacity = "1";
+            } 
+            else if (screenId === 'star') {
+                document.getElementById('star-screen').classList.remove('hidden');
+                document.body.classList.add('star-mode');
+                document.getElementById('bg-elements').style.opacity = "0";
+                startStarAnimation();
+            } 
+            else if (screenId === 'hbd') {
+                document.getElementById('hbd-screen').classList.remove('hidden');
+                document.body.classList.remove('star-mode');
+                document.getElementById('bg-elements').style.opacity = "1";
+            }
+        }
+
+        // เอฟเฟกต์พลุกระดาษ
+        function celebrate() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ffb8b8', '#ff9ff3', '#feca57', '#48dbfb', '#1dd1a1']
+            });
+        }
+
+        // แอนิเมชันท้องฟ้าจำลองในหน้า Timelapse
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const count = 150;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const maxDist = Math.sqrt(centerX * centerX + centerY * centerY);
+
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    distance: Math.random() * maxDist,
+                    angle: Math.random() * Math.PI * 2,
+                    speed: (Math.random() * 0.0015) + 0.0003,
+                    radius: Math.random() * 1.5 + 0.5,
+                    color: `hsl(${Math.random() * 40 + 190}, 100%, ${Math.random() * 20 + 80}%)`
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.fillStyle = 'rgba(11, 15, 33, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            for (let i = 0; i < stars.length; i++) {
+                let s = stars[i];
+                s.angle += s.speed;
+                let x = centerX + Math.cos(s.angle) * s.distance;
+                let y = centerY + Math.sin(s.angle) * s.distance;
+
+                ctx.beginPath();
+                ctx.arc(x, y, s.radius, 0, Math.PI * 2);
+                ctx.fillStyle = s.color;
+                ctx.fill();
+            }
+            animationFrameId = requestAnimationFrame(drawStars);
+        }
+
+        function startStarAnimation() {
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            drawStars();
+        }
+
+        function stopStarAnimation() {
+            cancelAnimationFrame(animationFrameId);
+            window.removeEventListener('resize', resizeCanvas);
+        }
+    </script>
+</body>
+</html>
